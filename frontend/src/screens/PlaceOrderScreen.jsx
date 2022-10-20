@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
-  Form,
   Col,
   Row,
   ListGroup,
@@ -23,7 +22,7 @@ const PlaceOrderScreen = () => {
 
   //calculate price
   const addDecimal = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
+    return Number(Math.round(num * 100) / 100).toFixed(2);
   };
 
   cart.itemsPrice = addDecimal(
@@ -34,18 +33,20 @@ const PlaceOrderScreen = () => {
 
   cart.taxPrice = addDecimal(Number((0.15 * cart.itemsPrice).toFixed(2)));
 
-  cart.totalPrice =
+  cart.totalPrice = addDecimal(
     Number(cart.itemsPrice) +
-    Number(+cart.shippingPrice) +
-    Number(cart.taxPrice);
+      Number(cart.shippingPrice) +
+      Number(cart.taxPrice)
+  );
 
   const createOrder = useSelector((state) => state.orderCreate);
-  const { loading, error, order, success } = createOrder;
+  const {  error, order, success } = createOrder;
 
   useEffect(() => {
     if (success) {
       navigate(`/order/${order._id}`);
     }
+    // console.log(Number(cart.taxPrice), Number(cart.shippingPrice), Number(cart.totalPrice));
   }, [navigate, success, order]);
 
   const placeOrderHandler = () => {
@@ -55,9 +56,9 @@ const PlaceOrderScreen = () => {
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        shippingPrice: Number(cart.shippingPrice),
+        taxPrice: Number(cart.taxPrice),
+        totalPrice: Number(cart.totalPrice),
       })
     );
   };
