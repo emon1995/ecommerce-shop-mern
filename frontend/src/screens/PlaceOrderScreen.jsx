@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,8 +13,12 @@ import {
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
+import { orderCreate } from "../actions/orderAction";
 
 const PlaceOrderScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cart = useSelector((state) => state.cart);
 
   //calculate price
@@ -31,10 +35,31 @@ const PlaceOrderScreen = () => {
   cart.taxPrice = addDecimal(Number((0.15 * cart.itemsPrice).toFixed(2)));
 
   cart.totalPrice =
-  Number(cart.itemsPrice) + Number(+cart.shippingPrice) + Number(cart.taxPrice);
+    Number(cart.itemsPrice) +
+    Number(+cart.shippingPrice) +
+    Number(cart.taxPrice);
+
+  const createOrder = useSelector((state) => state.orderCreate);
+  const { loading, error, order, success } = createOrder;
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+  }, [navigate, success, order]);
 
   const placeOrderHandler = () => {
-    console.log(cart.itemsPrice, cart.shippingPrice, cart.taxPrice);
+    dispatch(
+      orderCreate({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -120,6 +145,9 @@ const PlaceOrderScreen = () => {
                   <Col>Total</Col>
                   <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
