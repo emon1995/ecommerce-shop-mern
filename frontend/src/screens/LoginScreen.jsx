@@ -24,9 +24,9 @@ const LoginScreen = () => {
     setSearchParams(window.location.search);
     redirect = searchParams.get("redirect") ? searchParams.get("redirect") : '/';
     if (userInfo) {
-      navigate(redirect);
+      navigate(`/${redirect}`);
     }
-    // console.log(qty);
+    console.log(userInfo);
   }, [navigate, redirect, userInfo, searchParams, setSearchParams]);
 
   const submitHandler = (e) => {
