@@ -13,6 +13,7 @@ const LoginScreen = () => {
 
   let [searchParams, setSearchParams] = useSearchParams();
   let redirect;
+  // const redirect = window.location.search ? window.location.search.split('=')[1] : '/'
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,12 +22,16 @@ const LoginScreen = () => {
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
-    setSearchParams(window.location.search);
-    redirect = searchParams.get("redirect") ? searchParams.get("redirect") : '/';
+    // setSearchParams(window.location.search);
+    redirect = window.location.search ? searchParams.get("redirect") : "/";
     if (userInfo) {
-      navigate(`/${redirect}`);
+      if (redirect === "/") {
+        navigate("/");
+      } else {
+        navigate(`/${redirect}`);
+      }
     }
-    console.log(userInfo);
+    // console.log("re", redirect);
   }, [navigate, redirect, userInfo, searchParams, setSearchParams]);
 
   const submitHandler = (e) => {

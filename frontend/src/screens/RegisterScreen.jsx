@@ -24,14 +24,17 @@ const RegisterScreen = () => {
   const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
-    setSearchParams(window.location.search);
-    redirect = searchParams.get("redirect")
-      ? searchParams.get("redirect")
-      : "/";
+    // setSearchParams(window.location.search);
+    redirect = window.location.search ? searchParams.get("redirect") : "/";
     if (userInfo) {
-      navigate(redirect);
+      if (redirect === "/") {
+        navigate("/");
+      } else {
+        navigate(`/${redirect}`);
+      }
     }
-    // console.log(qty);
+
+    // console.log("re", redirect);
   }, [navigate, redirect, userInfo, searchParams, setSearchParams]);
 
   const submitHandler = (e) => {

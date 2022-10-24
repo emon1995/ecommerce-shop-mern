@@ -33,7 +33,7 @@ const CartScreen = () => {
   // console.log(cartItems);
 
   useEffect(() => {
-    setSearchParams(window.location.search);
+    setSearchParams('/login?redirect=shipping');
     let qty = searchParams.get("qty");
     if (id) {
       dispatch(addToCart(id, qty));
