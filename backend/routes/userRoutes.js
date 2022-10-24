@@ -5,14 +5,16 @@ import {
   registerUser,
   updateUserProfile,
   getUsers,
-  deleteUser
+  deleteUser,
+  getUserById,
+  updateUser,
 } from "../controllers/userController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // register user & admin get all user
-router.route("/").post(registerUser).get(protect, admin,  getUsers);
+router.route("/").post(registerUser).get(protect, admin, getUsers);
 // login user
 router.post("/login", authUser);
 // get profile
@@ -21,6 +23,10 @@ router
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 // admin can delete user
-router.route("/:id").delete(protect, admin, deleteUser);
+router
+  .route("/:id")
+  .delete(protect, admin, deleteUser)
+  .get(protect, admin, getUserById)
+  .put(protect, admin, updateUser);
 
 export default router;

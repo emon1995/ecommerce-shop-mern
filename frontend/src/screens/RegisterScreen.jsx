@@ -20,7 +20,7 @@ const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userRegister = useSelector((state) => state.userLogin);
+  const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
