@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Product from "../components/Product";
 import { listProducts } from "../actions/productAction";
@@ -8,13 +9,15 @@ import Message from "../components/Message";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const {keyword} = useParams();
+  // console.log(keyword);
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>

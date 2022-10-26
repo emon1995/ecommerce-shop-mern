@@ -6,14 +6,15 @@ import Navbar from "react-bootstrap/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { NavDropdown } from "react-bootstrap";
 import { logout } from "../actions/userAction";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import SearchBox from "./SearchBox";
 // import Form from "react-bootstrap/Form";
 // import Button from "react-bootstrap/Button";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -34,6 +35,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
+            <SearchBox />
             <Nav
               className="ml-auto my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
