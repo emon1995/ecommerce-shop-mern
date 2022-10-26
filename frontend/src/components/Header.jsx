@@ -21,7 +21,7 @@ const Header = () => {
   const logoutHandler = () => {
     if (userInfo) {
       dispatch(logout());
-      navigate("/login");
+      // navigate("/login");
     }
   };
 
