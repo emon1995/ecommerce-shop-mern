@@ -19,6 +19,7 @@ import {
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+import Meta from "./Meta";
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
@@ -44,11 +45,11 @@ const ProductScreen = () => {
   } = productReviewCreate;
 
   useEffect(() => {
-    if(successReview){
+    if (successReview) {
       alert("Review Submitted!");
       setRating(0);
       setComment("");
-      dispatch({type: PRODUCT_CREATE_REVIEW_RESET})
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
     dispatch(listProductDetails(id));
   }, [dispatch, id, successReview]);
@@ -78,6 +79,7 @@ const ProductScreen = () => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />
