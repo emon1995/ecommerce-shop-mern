@@ -1,7 +1,7 @@
 import path from "path";
 import dotenv from "dotenv";
 import express from "express";
-// import cors from 'cors';
+import cors from "cors";
 import colors from "colors";
 import morgan from "morgan";
 import connectDB from "./config/db.js";
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 // Auth route
